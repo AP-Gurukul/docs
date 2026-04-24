@@ -10,14 +10,15 @@ Security is critical to the AP-Gurukul ecosystem. Our primary goal is to **prote
 |-----------|---------|-------------|
 | **`@core-maintainers`** | Founders / Lead Architects | `Admin` on all repositories. Can merge to main and modify settings. |
 | **`@backend-team`** | Backend Developers | `Write` access to `backend-api` and `firebase-functions`. |
-| **`@frontend-web`** | Web App Developers | `Write` access to `web-app`. `Read` access to `backend-api` (can view code, cannot commit). |
-| **`@frontend-mobile`**| Mobile Developers | `Write` access to `mobile-app`. `Read` access to `backend-api`. |
-| **`@telegram-team`** | Telegram App Devs | `Write` access to `telegram-web-app`. `Read` access to `backend-api`. |
-| **`@admin-team`** | Internal Tools Devs | `Write` access to `admin-portal`. |
+| **`@frontend-web`** | Web App Developers | `Write` access to `web-app`. Isolated from backend code. |
+| **`@frontend-mobile`**| Mobile Developers | `Write` access to `mobile-app`. Can view `web-app` (open-source) but isolated from backend code. |
+| **`@telegram-team`** | Telegram App Devs | `Write` access to `telegram-web-app`. Isolated from backend code. |
+| **`@admin-team`** | Internal Tools Devs | `Write` access to `admin-portal`. Has `Read` access to all frontend & backend repos for full context. |
 | **`@devops`** | DevOps / Infrastructure | `Write` access to `infrastructure`. `Read` access to all repos. |
 
-**Why `Read` access for frontend teams?**
-By granting read access, a frontend engineer working on the Telegram App can browse the `backend-api` codebase to see what JSON payloads an endpoint expects, what error codes it returns, and exactly how the data is structured. However, they cannot directly modify the backend, ensuring architectural integrity.
+**Repository Visibility (Open Source vs Private)**
+- **Public Repositories** (`web-app`, `mobile-app`, `telegram-web-app`): Since these are public, **all developers (e.g., mobile developers) can naturally see the web app code** and vice versa. Open source contributors can fork these repos and submit PRs.
+- **Private Repositories** (`backend-api`, `admin-portal`, `infrastructure`): These are strictly protected. Mobile and web developers **do not** have read access to the backend or admin code to prevent security leaks. Only backend developers and admins can view backend code.
 
 ---
 

@@ -34,6 +34,27 @@ When your code is ready:
 
 ---
 
+## 🤝 Contribution Workflows
+
+Because AP-Gurukul operates a hybrid open-source model, the workflow depends on who you are and what you are building.
+
+### Open-Source Contributors (Public Repos)
+*Applies to: `web-app`, `mobile-app`, `telegram-web-app`*
+1. **Fork** the repository to your personal GitHub account.
+2. Create a new branch (`feat/your-feature`) in your fork.
+3. Push changes to your fork and open a **Pull Request** to our `main` branch.
+4. An internal `@core-maintainer` will review and merge it. 
+*(Note: As an open-source contributor, you will not have access to the `backend-api`. You must test against the provided mock APIs or public staging endpoints).*
+
+### Internal Private Team (Backend & Admin)
+*Applies to: `backend-api`, `admin-portal`, `infrastructure`*
+1. Clone the repository directly (no forking required).
+2. Create a branch locally (`feat/internal-feature`).
+3. Commit and push directly to the AP-Gurukul repository.
+4. Open an internal Pull Request for review by another internal developer.
+
+---
+
 ## 🛠 Adding a New Package/Dependency
 Since we are using Docker with mounted volumes, adding an `npm` package requires a specific workflow.
 
