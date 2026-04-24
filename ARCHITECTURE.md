@@ -1,44 +1,23 @@
-# Architecture & Security Blueprint
+# AP-Gurukul Architecture Blueprint
 
-## 🔐 Team Permissions & Security
+AP-Gurukul is an open-source educational platform consisting of multiple specialized frontend clients that all connect to a unified API.
 
-Security is critical to the AP-Gurukul ecosystem. Our primary goal is to **protect the backend code, Firebase Admin credentials, and database schemas** while allowing frontend engineers to see API endpoints for integration purposes.
+## 🏢 Platform Components
 
-### Teams
-
-| Team Name | Purpose | Permissions |
+| Repository | Purpose | Description |
 |-----------|---------|-------------|
-| **`@core-maintainers`** | Founders / Lead Architects | `Admin` on all repositories. Can merge to main and modify settings. |
-| **`@backend-team`** | Backend Developers | `Write` access to `backend-api` and `firebase-functions`. |
-| **`@frontend-web`** | Web App Developers | `Write` access to `web-app`. Isolated from backend code. |
-| **`@frontend-mobile`**| Mobile Developers | `Write` access to `mobile-app`. Can view `web-app` (open-source) but isolated from backend code. |
-| **`@telegram-team`** | Telegram App Devs | `Write` access to `telegram-web-app`. Isolated from backend code. |
-| **`@admin-team`** | Internal Tools Devs | `Write` access to `admin-portal`. Has `Read` access to all frontend & backend repos for full context. |
-| **`@devops`** | DevOps / Infrastructure | `Write` access to `infrastructure`. `Read` access to all repos. |
+| **`web-app`** | Primary Web Portal | Next.js application representing the student-facing educational platform. |
+| **`mobile-app`** | Native Mobile App | Cross-platform mobile application built with React Native. |
+| **`telegram-web-app`** | Telegram Mini App | Vite + React application optimized to run inside Telegram Messenger. |
+| **`shared-ui`** | Design System | Reusable React components and design system (buttons, typography, theme) used across all clients. |
 
-**Repository Visibility (Open Source vs Private)**
-- **Public Repositories** (`web-app`, `mobile-app`, `telegram-web-app`): Since these are public, **all developers (e.g., mobile developers) can naturally see the web app code** and vice versa. Open source contributors can fork these repos and submit PRs.
-- **Private Repositories** (`backend-api`, `admin-portal`, `infrastructure`): These are strictly protected. Mobile and web developers **do not** have read access to the backend or admin code to prevent security leaks. Only backend developers and admins can view backend code.
+## 🔄 The Sync Ecosystem
 
----
+At the core of AP-Gurukul is a unified cloud database.
+- **Universal Authentication:** A user logs in via Gmail (Google Auth). Because all our frontend clients point to the same backend API, a user can start a quiz on the `web-app`, pause, and resume it on the `mobile-app` using the same login.
+- **Real-Time Data:** When new subjects, questions, or resources are published by our core administration team, they are instantly beamed via WebSocket/API to all open-source frontends simultaneously.
 
-## 🐳 Docker Orchestration
+## 🔐 Open Source Philosophy
 
-The `infrastructure` repository contains a `docker-compose.yml` file. This acts as the glue that holds the system together.
-
-### The Virtual Network (`apgurukul`)
-When `docker compose up` is run, Docker creates an isolated virtual network named `apgurukul`. All containers sit inside this network.
-
-This means:
-- The Web App can talk to the Backend API internally via `http://backend-api:4000`
-- The Backend API can talk to Redis internally via `redis://redis:6379`
-- You can talk to any of them from your browser via `http://localhost:<PORT>`
-
-### Hot Reloading (Volume Mounts)
-Inside `docker-compose.yml`, you will see:
-```yaml
-volumes:
-  - ../backend-api/src:/app/src
-```
-This tells Docker: *"Take the `src` folder on Praneeth's Mac, and mount it over the `/app/src` folder inside the Linux container."* 
-Because of this, when you save a file in VS Code, `ts-node-dev` or `Vite` inside the container instantly sees the change and restarts the server. You get the stability of Docker with the speed of local development.
+We believe in building the future of education together. Our frontends (`web-app`, `mobile-app`, `telegram-web-app`, `shared-ui`) are 100% open-source. 
+Developers worldwide can fork these repositories, run them locally against our public Staging API, and submit Pull Requests to improve the user interface, add new features, or fix bugs.

@@ -30,40 +30,19 @@ When your code is ready:
 1. Push your branch to GitHub.
 2. Open a Pull Request from `feat/your-feature-name` to `main`.
 3. CI/CD pipelines will automatically run linting and tests.
-4. Require at least 1 approval from a `@core-maintainer` before merging.
+4. Require at least 1 approval from a core maintainer before merging.
 
 ---
 
 ## 🤝 Contribution Workflows
 
-Because AP-Gurukul operates a hybrid open-source model, the workflow depends on who you are and what you are building.
-
-### Open-Source Contributors (Public Repos)
-*Applies to: `web-app`, `mobile-app`, `telegram-web-app`*
 1. **Fork** the repository to your personal GitHub account.
 2. Create a new branch (`feat/your-feature`) in your fork.
 3. Push changes to your fork and open a **Pull Request** to our `main` branch.
-4. An internal `@core-maintainer` will review and merge it. 
-*(Note: As an open-source contributor, you will not have access to the `backend-api`. You must test against the provided mock APIs or public staging endpoints).*
-
-### Internal Private Team (Backend & Admin)
-*Applies to: `backend-api`, `admin-portal`, `infrastructure`*
-1. Clone the repository directly (no forking required).
-2. Create a branch locally (`feat/internal-feature`).
-3. Commit and push directly to the AP-Gurukul repository.
-4. Open an internal Pull Request for review by another internal developer.
+4. An internal maintainer will review and merge it. 
+*(Note: As an open-source contributor, you test against the provided public staging endpoints. You do not need to run local databases).*
 
 ---
 
 ## 🛠 Adding a New Package/Dependency
-Since we are using Docker with mounted volumes, adding an `npm` package requires a specific workflow.
-
-**Wrong Way:**
-Running `npm install moment` on your Mac. The package is downloaded to your local `node_modules`, but the Docker container might crash because it's running Linux and the `node_modules` sync can break binary dependencies.
-
-**Right Way:**
-Run the install command *inside* the running Docker container:
-```bash
-docker compose exec backend-api npm install moment
-```
-This installs the package inside the container, updates `package.json`, and safely synchronizes it back to your Mac!
+If you need to add an `npm` package, please ensure it is absolutely necessary. Keep our bundles small and performant. Run `npm install package-name` and ensure you commit the updated `package-lock.json` file.
