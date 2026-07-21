@@ -36,3 +36,5 @@ The app will connect to our staging API automatically.
 
 ## 📖 Further Reading
 - [Development & Contribution Guide](./DEVELOPMENT_GUIDE.md)
+- [AWS Migration Overview](./AWS_MIGRATION_OVERVIEW.md) — plain-English status
+  of the move from Firebase to a shared AWS backend, and what's still outstanding.
